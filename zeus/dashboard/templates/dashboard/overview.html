@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  {% for org in all_orgs %}
+    <h4>{{ org.ORG_name }} owned by {{ org.ORG_owner }} at {{ org.ORG_created }}</h4> <br>
+    <p><a href="{{ org.get_absolute_url }}"><button class="btn btn-primary">org detail</button></a></p>
+  {% endfor %}
+
+
+  {% if user.is_staff %}
+    <a href="{% url 'dashboard:create_org' %}"><button class="btn btn-primary">Create Org</button></a>
+
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  {% for org in all_orgs %}
+    <h4>{{ org.ORG_name }} owned by {{ org.ORG_owner }}</h4> <br> <h4>at {{ org.ORG_created }}</h4> <br>
+    {% if org.ORG_members.all %}
+      <h5>Members:</h5>
+      {% for member in org.ORG_members.all %}
+        <h5><a href="{{ member.get_absolute_url }}">{{ member }}</a></h5>
+      {% endfor %}
+    {% else %}
+      <h5>Members: There is no members yet</h5>
+    {% endif %}
+    <p><a href="{{ org.get_absolute_url }}"><button class="btn btn-primary">org detail</button></a></p>
+  {% endfor %}
+
+
+{% endblock %}

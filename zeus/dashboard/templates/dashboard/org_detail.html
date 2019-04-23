@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% load widget_tweaks %}
+
+{% block content %}
+
+  <h4>{{ org.ORG_name }} owned by {{ org.ORG_owner }}</h4> <br> <h4>at {{ org.ORG_created }}</h4> <br>
+  {% if org.ORG_members.all %}
+    Members:
+    {% for member in org.ORG_members.all %}
+      <h5><a href="{{ member.get_absolute_url }}">{{ member }}</a></h5>
+    {% endfor %}
+  {% else %}
+    <h5>Members: There is no members yet</h5>
+  {% endif %}
+  {% if user == org.ORG_owner %}
+
+      <div class="col-lg-12">
+          <form id="summary-form" action="" method="post" class="form-horizontal" novalidate>
+            {% csrf_token %}
+            <section class="card">
+              <header class="card-header">
+                <div class="card-actions">
+                  <a href="#" class="card-action card-action-toggle" data-card-toggle></a>
+                  <!--<a href="#" class="card-action card-action-dismiss" data-card-dismiss></a>-->
+                </div>
+
+                <h2 class="card-title">Update Organization</h2>
+                <!--<p class="card-subtitle">-->
+                  <!--Validation summary will display an error list above the form.-->
+                <!--</p>-->
+              </header>
+              <div class="card-body">
+                <div class="validation-message">
+                  <ul></ul>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-3 control-label text-sm-right pt-2">Full Name <span class="required">*</span></label>
+                  <div class="col-sm-9">
+                    <!--<input type="text" name="fullname" class="form-control" title="Please enter a name." placeholder="organization name" required/>-->
+                    {% render_field update_form.ORG_name class+="form-control" %}
+                    {{ update_form.ORG_name.errors }}
+                  </div>
+                </div>
+
+                <!--<div class="form-group row">-->
+                  <!--<label class="col-sm-3 control-label text-sm-right pt-2">Email <span class="required">*</span></label>-->
+                  <!--<div class="col-sm-9">-->
+                    <!--<input type="email" name="email" class="form-control" title="Please enter an email address." placeholder="eg.: john@doe.com" required/>-->
+                  <!--</div>-->
+                <!--</div>-->
+                <!--<div class="form-group row">-->
+                  <!--<label class="col-sm-3 control-label text-sm-right pt-2">GitHub</label>-->
+                  <!--<div class="col-sm-9">-->
+                    <!--<input type="url" name="url" title="Please enter a valid url." class="form-control" placeholder="eg.: https://github.com/johndoe" />-->
+                  <!--</div>-->
+                <!--</div>-->
+                <div class="form-group row">
+                  <label class="col-sm-3 control-label text-sm-right pt-2">Resume <span class="required">*</span></label>
+                  <div class="col-sm-9">
+                    <!--<textarea name="resume" rows="5" title="Your resume is too short." class="form-control" placeholder="Enter your resume" required></textarea>-->
+                    {% render_field update_form.ORG_brief class+="form-control" %}
+                    {{ update_form.ORG_brief.errors }}
+                  </div>
+                </div>
+              </div>
+              <footer class="card-footer">
+                <div class="row justify-content-end">
+                  <div class="col-sm-9">
+                    <button class="btn btn-primary">Submit</button>
+                    <!--<button type="reset" class="btn btn-default">Reset</button>-->
+                  </div>
+                </div>
+              </footer>
+            </section>
+          </form>
+      </div>
+
+
+
+    <!--<h1>Update Organization</h1>-->
+    <!--<form action="" method="post">-->
+      <!--{% csrf_token %}-->
+      <!--{{ update_form.as_p }}-->
+      <!--<input type="submit" value="update">-->
+    <!--</form>-->
+  <!--{% endif %}-->
+
+{% endblock %}
